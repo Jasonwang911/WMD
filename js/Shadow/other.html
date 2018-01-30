@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<template id="hello-angular">
+		<style type="text/css">
+			h1{
+				color: red;
+			}
+		</style>
+		<h1>hello</h1>
+	</template>
+	<script type="text/javascript">
+		// 指向的是在hello.html这个页面的所处环境的文档 index
+		var indexDoc = document;
+
+		var helloDoc = (indexDoc._currentScript || indexDoc.currentScript).ownerDocument;
+
+		var temp = helloDoc.querySelector('#hello-angular');
+
+		// 创建一个新元素的原型，继承自HTMLELEMENt
+		var HelloProto = Object.create(HTMLElement.prototype);
+
+		HelloProto.createdCallback = function() {
+
+			var root = this.createShadowRoot();
+
+			root.appendChild(indexDoc.importNode(tmpl.content, true));
+
+		}
+
+		var hello = indexDov.registerElement('hello-angular', {
+			prototype: HelloProto
+		})
+	</script>
+</body>
+</html>
